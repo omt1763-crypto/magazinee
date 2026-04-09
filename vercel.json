@@ -7,11 +7,6 @@
   "env": {
     "VITE_APP_TITLE": "AI Luminary Magazine"
   },
-  "regions": ["pdx1"],
-  "functions": {
-    "api/**/*.ts": {
-      "maxDuration": 60
-    }
-  }
+  "regions": ["pdx1"]
 }
 
