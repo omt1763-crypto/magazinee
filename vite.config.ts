@@ -21,13 +21,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      onwarn(warning, warn) {
-        // Suppress the /src/main.tsx resolution warning - it's intentional
-        if (warning.code === 'UNRESOLVED_ENTRY' || (warning.message && warning.message.includes('src/main.tsx'))) {
-          return;
-        }
-        warn(warning);
-      },
+      external: ["/src/main.tsx"],
     },
   },
   optimizeDeps: {
