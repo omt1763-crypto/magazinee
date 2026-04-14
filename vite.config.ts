@@ -19,4 +19,10 @@ export default defineConfig({
     host: "::",
     port: 8080,
   },
+  build: {
+    target: "esnext",
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom"],
+  },
 });
