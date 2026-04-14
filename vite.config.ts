@@ -19,10 +19,4 @@ export default defineConfig({
     host: "::",
     port: 8080,
   },
-  build: {
-    target: "esnext",
-    rollupOptions: {
-      input: path.resolve(__dirname, "index.html"),
-    },
-  },
 });
