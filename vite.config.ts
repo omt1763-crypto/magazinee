@@ -9,7 +9,22 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig({
-  plugins: [react(), componentTagger()],
+  plugins: [
+    {
+      name: "html-transform",
+      transformIndexHtml: {
+        order: "pre",
+        handler(html) {
+          return html.replace(
+            "<div id=\"root\"></div>",
+            '<div id="root"></div><script type="module" src="/src/main.tsx"><\/script>'
+          );
+        },
+      },
+    },
+    react(),
+    componentTagger(),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -18,11 +33,5 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
-  },
-  build: {
-    rollupOptions: {
-      external: ["src/main.tsx"],
-      input: path.resolve(__dirname, "index.html"),
-    },
   },
 });
