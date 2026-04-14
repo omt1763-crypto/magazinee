@@ -14,4 +14,17 @@ export default defineConfig({
     host: "::",
     port: 8080,
   },
+  build: {
+    rollupOptions: {
+      input: path.resolve(__dirname, "index.html"),
+      onwarn: (warning) => {
+        if (
+          warning.code === "UNRESOLVED_IMPORT" &&
+          (warning.source === "/src/main.tsx?entry" || warning.source === "/src/main.tsx")
+        ) {
+          return;
+        }
+      },
+    },
+  },
 });
