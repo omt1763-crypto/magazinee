@@ -19,4 +19,10 @@ export default defineConfig({
     host: "::",
     port: 8080,
   },
+  build: {
+    rollupOptions: {
+      external: ["src/main.tsx"],
+      input: path.resolve(__dirname, "index.html"),
+    },
+  },
 });
