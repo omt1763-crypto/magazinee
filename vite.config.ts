@@ -17,11 +17,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
-      onwarn(warning) {
-        // Suppress warnings about cannot find module for src/main.tsx
-        if (warning.code === "UNRESOLVED_IMPORT" && warning.source === "src/main.tsx") {
-          return;
-        }
+      external: (id) => {
+        return id.includes("src/main.tsx") || id.includes("/src/main.tsx");
       },
     },
   },
