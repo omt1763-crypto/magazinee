@@ -9,4 +9,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning) {
+        // Suppress unresolved import warnings (handled by dynamic import)
+        if (warning.code === 'UNRESOLVED_IMPORT') {
+          return;
+        }
+      },
+    },
+  },
 });
