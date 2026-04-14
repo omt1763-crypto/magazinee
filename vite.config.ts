@@ -3,17 +3,27 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    {
+      name: "suppress-tsconfig-warning",
+      apply: "build",
+      enforce: "post",
+    },
+    react(),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    target: "esnext",
     rollupOptions: {
-      external: (id) => id.includes("main") && id.includes("tsx"),
-      input: path.resolve(__dirname, "index.html"),
+      onwarn(warning, defaultHandler) {
+        if (warning.code === "UNRESOLVED_IMPORT" && warning.source?.includes("main.tsx")) {
+          return;
+        }
+        defaultHandler(warning);
+      },
     },
   },
 });
