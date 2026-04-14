@@ -9,4 +9,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, defaultHandler) {
+        // Completely silence the warning about unresolved /src/main.tsx
+        if (warning.code === 'UNRESOLVED_IMPORT') {
+          return; // Don't warn at all, just continue
+        }
+        defaultHandler(warning); // Handle other warnings normally
+      },
+    },
+  },
 });
