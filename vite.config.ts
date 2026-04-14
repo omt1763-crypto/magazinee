@@ -10,6 +10,7 @@ import { componentTagger } from "lovable-tagger";
 
 export default defineConfig({
   plugins: [react(), componentTagger()],
+  root: ".",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -18,11 +19,11 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    middlewareMode: false,
   },
   build: {
     target: "esnext",
-  },
-  optimizeDeps: {
-    include: ["react", "react-dom"],
+    outDir: "dist",
+    emptyOutDir: true,
   },
 });
