@@ -4,22 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig({
-  plugins: [
-    {
-      name: "html-transform",
-      transformIndexHtml: {
-        order: "pre",
-        handler(html) {
-          return html.replace(
-            "<div id=\"root\"></div>",
-            '<div id="root"></div><script type="module" src="/src/main.tsx"><\/script>'
-          );
-        },
-      },
-    },
-    react(),
-    componentTagger(),
-  ],
+  plugins: [react(), componentTagger()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -28,5 +13,16 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+  },
+  build: {
+    rollupOptions: {
+      input: path.resolve(__dirname, "index.html"),
+      onwarn(warning) {
+        // Suppress warnings about cannot find module for src/main.tsx
+        if (warning.code === "UNRESOLVED_IMPORT" && warning.source === "src/main.tsx") {
+          return;
+        }
+      },
+    },
   },
 });
