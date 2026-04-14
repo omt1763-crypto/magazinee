@@ -1,15 +1,9 @@
-import { createClient } from '@supabase/supabase-js'
+// Cloudflare R2 Storage Configuration
+// PDFs are hosted on Cloudflare R2 and served over CDN
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const CLOUDFLARE_R2_URL = 'https://pub-06da56e628dd4d788982885a8f0c9ce3.r2.dev'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
-// Helper function to get PDF URL from Supabase Storage
+// Helper function to get PDF URL from Cloudflare R2 Storage
 export const getPdfUrl = (fileName: string) => {
-  return `${supabaseUrl}/storage/v1/object/public/magazine/${fileName}`
+  return `${CLOUDFLARE_R2_URL}/${fileName}`
 }
