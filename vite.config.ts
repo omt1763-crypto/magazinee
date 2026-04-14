@@ -9,4 +9,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress the specific warning about ./src/main.tsx
+        if (warning.code === 'UNRESOLVED_IMPORT' && warning.message.includes('src/main.tsx')) {
+          return;
+        }
+        warn(warning);
+      },
+    },
+  },
 });
