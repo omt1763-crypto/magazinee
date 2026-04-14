@@ -14,12 +14,4 @@ export default defineConfig({
     host: "::",
     port: 8080,
   },
-  build: {
-    rollupOptions: {
-      input: path.resolve(__dirname, "index.html"),
-      external: (id) => {
-        return id.includes("src/main.tsx") || id.includes("/src/main.tsx");
-      },
-    },
-  },
 });
